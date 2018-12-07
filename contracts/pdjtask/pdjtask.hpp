@@ -20,7 +20,8 @@ namespace eosio {
    class [[eosio::contract("pdjtoken")]] token : public contract {
       public:
          using contract::contract;
-
+         token(name receiver, name code,  datastream<const char*> ds): contract(receiver, code, ds) {}
+         
          [[eosio::action]]
          void create( name   issuer,
                       asset  maximum_supply);
@@ -83,10 +84,7 @@ asset token::get_balance( name token_contract_account, name owner, symbol_code s
 
 class [[eosio::contract]] pdjtask : public token {
    public:
-      /*
-      pdjtask( name self ):  pdjtoken(self){
-            
-      }*/
+      pdjtask(name receiver, name code,  datastream<const char*> ds): token(receiver, code, ds) {}
 
       //创建任务
       [[eosio::action]]

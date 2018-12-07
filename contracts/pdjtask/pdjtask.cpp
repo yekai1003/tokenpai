@@ -177,5 +177,5 @@ void pdjtask::confirm( uint64_t taskID, name creator, uint8_t ok )
 
 } /// namespace eosio
 
-///EOSIO_DISPATCH( eosio::pdjtask, (createtk)(commit)(confirm)(create)(issue)(transfer) )
-EOSIO_DISPATCH( eosio::token, (create)(issue)(transfer))
+EOSIO_DISPATCH( eosio::pdjtask, (createtk)(commit)(confirm)(create)(issue)(transfer) )
+//EOSIO_DISPATCH( eosio::token, (create)(issue)(transfer))
