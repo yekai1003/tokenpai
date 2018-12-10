@@ -1,5 +1,5 @@
 {
-    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Fri Dec  7 18:49:02 2018",
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Mon Dec 10 17:27:43 2018",
     "version": "eosio::abi/1.1",
     "structs": [
         {
@@ -9,10 +9,6 @@
                 {
                     "name": "taskID",
                     "type": "uint64"
-                },
-                {
-                    "name": "worker",
-                    "type": "name"
                 },
                 {
                     "name": "memo",
@@ -27,10 +23,6 @@
                 {
                     "name": "taskID",
                     "type": "uint64"
-                },
-                {
-                    "name": "creator",
-                    "type": "name"
                 },
                 {
                     "name": "ok",
