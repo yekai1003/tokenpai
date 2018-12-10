@@ -66,7 +66,7 @@ void pdjtask::confirm( uint64_t taskID, uint8_t ok )
     if ( ok ){
         //发币刺激
         //transfer( creator, tkobj->worker, tkobj->bonus, "very good!" );
-        //task_commit(tkobj->creator, tkobj->worker, tkobj->bonus, "very good!");
+        task_commit(tkobj->creator, tkobj->worker, tkobj->bonus, "very good!");
     }
     
 }
