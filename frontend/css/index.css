@@ -10,7 +10,7 @@
 */
 .pdjtask{
     width: 80%;
-    margin:50px auto 40px;
+    margin:65px auto 40px;
     display: flex;
     justify-content: center;
 }
@@ -19,6 +19,14 @@
     text-align: center;
     margin-top: 20px;
 }
+
+.tktable{
+    width: 70%;
+    margin:50px auto 40px;
+    display: flex;
+    justify-content: center;
+}
+
 .weiclass{
     width: 80px;
     display: inline-block;
@@ -28,4 +36,13 @@
     width: 80%;
     margin: 40px auto;
     text-align: center;
+}
+
+.userInfo{
+    font-size: 18px;    
+    width: 150px;
+    margin: 20px auto;
+    position: fixed;
+    top: 0px;
+    right: 250px;
 }

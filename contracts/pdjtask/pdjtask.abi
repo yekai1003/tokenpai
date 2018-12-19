@@ -1,6 +1,6 @@
 {
-    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Mon Dec 10 18:38:30 2018",
-    "version": "eosio::abi/1.1",
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Wed Dec 19 12:10:36 2018",
+    "version": "eosio::abi/1.0",
     "structs": [
         {
             "name": "commit",
@@ -49,6 +49,20 @@
                 {
                     "name": "memo",
                     "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "receivetk",
+            "base": "",
+            "fields": [
+                {
+                    "name": "taskID",
+                    "type": "uint64"
+                },
+                {
+                    "name": "worker",
+                    "type": "name"
                 }
             ]
         },
@@ -103,6 +117,11 @@
             "name": "createtk",
             "type": "createtk",
             "ricardian_contract": ""
+        },
+        {
+            "name": "receivetk",
+            "type": "receivetk",
+            "ricardian_contract": ""
         }
     ],
     "tables": [
@@ -115,6 +134,5 @@
         }
     ],
     "ricardian_clauses": [],
-    "variants": [],
     "abi_extensions": []
 }

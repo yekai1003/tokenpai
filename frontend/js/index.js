@@ -18,11 +18,24 @@ $(function() {
         }        
         eos = Eos(config);
 
+
+        eos.getAccount(userAccount).then(result => {
+            console.log(result);
+            alert("欢迎回来，" + userAccount);
+            $(".userName span:nth-child(2)").html("账户：" + userAccount);
+            getBalance();
+        }).catch(err => {
+            console.log(err);
+            alert("错误：账户不存在！");
+        });
+
+
+
         $(".close_win").click();
-        alert("欢迎回来，" + userAccount);
-        
         getTaskList();
     });
+
+
 
 
 
@@ -31,6 +44,7 @@ $(function() {
         console.log("发布任务");
         console.log(userPrivateKey);
         $("#ReleaseTask").modal(); 
+        getTaskList();
     });
     //确认发布任务
     $(".ConfirmRelease").on("click", function() {
@@ -64,7 +78,51 @@ $(function() {
                                 getTaskList();  
                           })
           .catch(error => {console.error(error);alert("发生错误！" + error)});
-    });    
+    });
+    
+    
+
+
+
+
+
+    //领取任务
+    $(".Receive").on("click", function() {
+        console.log("领取任务");
+        $("#ReceiveTask").modal();
+        getTaskList();
+    });
+    //确认领取
+    $(".ConfirmReceive").on("click", function() {
+        var TaskID = $("#ReceiveTaskID").val();
+        console.log(TaskID);
+        $(".close_win").click();
+
+        eos.transaction({
+            actions: [
+            {
+                account: 'pdjtask',
+                name:    'receivetk',
+                authorization: [{
+                    actor:      userAccount,
+                    permission: 'active'
+                }],
+                    
+                data: {
+                    taskID:     TaskID,
+                    worker:     userAccount
+                }
+            }
+            ]
+        }).then(result => {
+                                console.log(result);
+                                alert("领取成功");
+                                getTaskList();  
+                          })
+          .catch(error => {console.error(error);alert("发生错误！" + error)});
+    });
+
+
 
 
 
@@ -72,8 +130,9 @@ $(function() {
     $(".Commit").on("click", function() {
         console.log("提交任务");
         $("#SubmitTask").modal();
+        getTaskList();
     });
-
+    //确认提交
     $(".ConfirmSubmission").on("click", function() {
 
         var TaskID  = $("#GetTaskID").val();
@@ -108,8 +167,9 @@ $(function() {
     $(".Confirm").on("click", function() {
         console.log("验收任务");
         $("#ConfirmTask").modal();
+        getTaskList();
     });
-
+    //确认验收
     $(".TaskConfirm").on("click", function() {
 
         var TaskID  = $("#taskid").val();
@@ -137,6 +197,7 @@ $(function() {
                              console.log(result);
                              alert("任务验收成功");
                              getTaskList();
+                             getBalance();
                            })
           .catch(error => {console.error(error);alert("发生错误！" + error)});
 
@@ -144,8 +205,9 @@ $(function() {
     
 
 
+ 
     //查看余额
-    $(".GetBalance").on("click", function() {
+    function getBalance(){
         eos.getCurrencyBalance({
             account: userAccount,
             code: 'pdjtoken',
@@ -153,15 +215,16 @@ $(function() {
         })
         .then(result => {   console.log(result);
                             if(result.length == 0)
-                                alert(userAccount + ":余额为0");
+                                $(".balance span:nth-child(2)").html("余额：0");
                             else
-                                alert(userAccount +": " + result);
+                                $(".balance span:nth-child(2)").html("余额：" + result);
                         })
         .catch(error => console.error(error));
-        getTaskList();
-    })
+    }
 
     //console.log(eos);
+  
+  
     //任务列表
     function getTaskList(){
         eos.getTableRows({
@@ -176,20 +239,30 @@ $(function() {
         .then(function(result){
             console.log(result.rows);
             var tr;
+            var tkStatus = "";
             for(var i = 0; i < result.rows.length; i++){
                 
+                if(result.rows[i].status == 0)
+                    tkStatus = "未领取";
+                else if(result.rows[i].status == 1)
+                    tkStatus = "已领取";
+                else if(result.rows[i].status == 2)
+                    tkStatus = "已提交";
+                else
+                    tkStatus = "已结束";
+
                 tr += '<tr>';
                 tr += '<td class="active">'+result.rows[i].taskID+'</td>';
                 tr += '<td class="success">'+result.rows[i].creator+'</td>';
                 tr += '<td class="warning">'+result.rows[i].worker+'</td>';
                 tr += '<td class="danger">'+result.rows[i].bonus+'</td>';
-                tr += '<td class="info">'+result.rows[i].status+'</td>';
+                tr += '<td class="info">'+tkStatus+'</td>';
                 tr += '<td class="active">'+result.rows[i].remark+'</td>';
                 tr += '<td class="success">'+result.rows[i].comment+'</td>';
                 tr += '</tr>';
                 
             }
-            console.log(tr);
+            //console.log(tr);
             $("#list").html(tr);
             
         })

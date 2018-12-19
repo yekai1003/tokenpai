@@ -25,6 +25,9 @@ class [[eosio::contract]] pdjtask : public contract {
       //创建任务
       [[eosio::action]]
       void createtk( name creator, name worker, asset taskBonus, string memo );
+      //领取任务
+      [[eosio::action]]
+      void receivetk( uint64_t taskID, name worker);
       //提交任务
       [[eosio::action]]
       void commit( uint64_t taskID, string memo );
